@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+
+
+
+	
+{% block content %}
+<div class="container">
+ <div class="row">
+ <div class="col-sm-8 blog-main">
+  <div class="blog-post">
+   </br>
+	<h2 class="blog-post-title">{{ obj.title }}</h2>
+    <p class="blog-post-meta"> {{ obj.published_date}}</br>
+	{{ obj.description }} </br>
+	<button id = "Likes" button type="button" class="btn btn-mini btn-primary">Like</button>
+	{{ obj.likes_count }}
+  </div>
+ </div>
+  <div class="col-sm-8">
+  <h4> Comments/Questions </h4> 
+  <form method = "POST" action='{% url "comment_create_view" %}'>{% csrf_token %}
+  <!--<input type = "hidden" name="video_id" Value='{{ obj.id }}'/>-->
+  <input type = "hidden" name="origin_path" Value='{{ request.get_full_path }}'/>
+  </form>
+  <table class ='table' >
+  {% for comment in comments %}
+    <tr><td>{{ comment.get_comment }} </br>
+	<small>{{ comment.user }} | {{ comment.timestamp| timesince}} ago </small>
+	{% if not comment.is_child %}
+	<ul>
+		{% for child in comment.get_children %}
+		<li> {{ child.get_comment }}
+		<small> {{ child.user }}</small></li>
+		{% endfor %}
+		</ul>
+		<a href= '{{ comment.get_absolute_url }}' > View Thread </a> | <a href ='#' class='reply_btn'> Reply </a>  
+		<div class='reply_comment'>
+		<form method= "POST" action='{% url "comment_create_view" %}'>{% csrf_token %}
+		<input type = "hidden" name="parent_id" Value='{{ comment.id }}'/>
+		 <input type = "hidden" name="origin_path" Value='{{ comment.get_origin }}'/>
+		</form>
+		</div>
+	{% endif %}
+  </tr></td>
+  {% endfor %}
+ </table>
+</div></div>
+</div></div>
+{% endblock %}
+
+
+

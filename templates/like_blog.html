@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+
+
+	
+{% block content %}
+<div class="container">
+ <div class="row">
+ <div class="col-sm-8 blog-main">
+  <div class="blog-post">
+   </br>
+	<h2 class="blog-post-title">{{ object.title }}</h2>
+    <p class="blog-post-meta"> {{ object.published_date}}</br>
+	{{ object.description }} </br>
+	<button id = "Likes" button type="button" class="btn btn-mini btn-primary">Like</button>
+	</br>
+  </div>
+ </div>
+ </div></div>
+
+{% endblock %}
+
+
+

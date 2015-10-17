@@ -1,0 +1,56 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Food Blog</title>
+
+    {% include 'css.html' %}
+
+    {% include 'js.html' %}
+  </head>
+
+  <body>
+
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item active" href="/">Home</a>
+          <a class="blog-nav-item" href="#">Blog</a>
+          <a class="blog-nav-item" href="#">About</a>
+		  <ul class= "nav navbar-nav navbar-right">
+		    {% if user.is_authenticated %}
+				<li><a href = "{% url 'logout' %}"> Logout</a>
+			{% else %}
+				<li><a href = "{% url 'login' %}"> Login</a>
+			{% endif %}</ul>
+        </nav>
+      </div>
+    </div>
+
+   {% block content %}
+   {% endblock %}
+   
+   
+   
+   {% block footer %}
+   {% endblock %}
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

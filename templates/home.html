@@ -1,0 +1,115 @@
+{% extends "base.html" %} 
+{% load staticfiles %}
+ {% block content %}
+ 
+ <div class="container">
+     {% if request.user.is_authenticated %}
+		<h2> Welcome {{ username }} </h2>
+      {% endif %}
+      <div class="blog-header">
+        <h1 class="blog-title">Food Blog</h1>
+        <p class="lead blog-description">Cooking Blog</p>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+          <div class="blog-post">
+			{% for post in blogs %}
+            <h2 class="blog-post-title">{{ post.title }}</h2>
+            <p class="blog-post-meta"> {{ post.published_date}}<a href="#">Mark</a></p>
+			<p>	{{ post.description|truncatewords:"50"|safe }} 
+			<a href="{{post.get_absolute_url}}" class="readMoreLink">Read more&nbsp;»</a></p>
+			{% endfor %}
+          </div><!-- /.blog-post -->
+
+          <nav>
+            <ul class="pager">
+			{% if blogs.has_previous %}
+              <li><a href="?page={{ blogs.previous_page_number }}">Previous</a></li>
+			{% endif %}
+			<!--<span class="current">
+            Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}
+			</span>-->
+			{% if blogs.has_next %}
+              <li><a href="?page={{ blogs.next_page_number }}">Next</a></li>
+			{% endif %}
+            </ul>
+          </nav>
+
+        </div><!-- /.blog-main -->
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          <div class="sidebar-module sidebar-module-inset">
+            <h4>About</h4>
+            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+          </div>
+		  
+          <div class="sidebar-module sidebar-module-inset">
+		  <h4>About</h4>
+		  <a href="{% url 'blog_post' %}">Post a Blog</a></li>
+		  </div>
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+			<ul>
+			
+			{{ date_list }}
+			<ul>
+				{% for date in date_list %}
+					<li>{{ date|date }}</li>
+				{% endfor %}
+			</ul>
+
+		  <div>
+				<h1>{{ year|date:"Y" }}</h1>
+					{% for obj in object_list %}
+				<p>
+					{{ obj.title }} - {{ obj.pub_date|date:"F j, Y" }}
+				</p>
+					{% endfor %}
+		  </div>
+		  
+		  
+			<!--{% for post in blogs %}
+				<a href="{{post.get_absolute_url}}">{{ post.published_date }}</a>
+			{% endfor %}
+			</ul>
+            <ol class="list-unstyled">
+              <li><a href="#">March 2014</a></li>
+              <li><a href="#">February 2014</a></li>
+              <li><a href="#">January 2014</a></li>
+              <li><a href="#">December 2013</a></li>
+              <li><a href="#">November 2013</a></li>
+              <li><a href="#">October 2013</a></li>
+              <li><a href="#">September 2013</a></li>
+              <li><a href="#">August 2013</a></li>
+              <li><a href="#">July 2013</a></li>
+              <li><a href="#">June 2013</a></li>
+              <li><a href="#">May 2013</a></li>
+              <li><a href="#">April 2013</a></li>
+            </ol>-->
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>
+        </div><!-- /.blog-sidebar -->
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+{% endblock %}
+
+{% block footer %}
+    <footer class="blog-footer">
+      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+{% endblock %}
